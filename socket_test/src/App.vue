@@ -15,10 +15,11 @@ export default {
   },
   sockets:{
     connect: function(){
-      
+      // 与socket连接成功的回调
+      console.log('连接成功')
     },
     customEmit: function(val){
-      console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
+      console.log(val)
     }
   },
   methods: {

@@ -9,7 +9,9 @@ var server = http.createServer(function (req,res){
 
 var io = require('socket.io').listen(server);
 io.sockets.on('connection', (socket) => {
-    console.log('链接成功');
+    // console.log('链接成功');
+
+
 
     // 注册事件
     socket.on('emit_method',(val)=>{
@@ -18,6 +20,9 @@ io.sockets.on('connection', (socket) => {
 
     socket.on('message',(msg)=>{
       console.log('socket',msg)
+
+	  // 接受到消息后执行向客户端发送消息
+	  socket.emit('customEmit','我收到了')     
     })
 });
 io.sockets.on('message', (msg) => {
