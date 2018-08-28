@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <input type="text" v-model="msg">
-    <div class="btn" @click="clickButton">点我发送</div>
+    <div class="btn" @click="SendToALll">发给所有人</div>
+    <div class="btn" @click="SendToOne">发给佳慧</div>
   </div>
 </template>
 
@@ -10,28 +11,38 @@ export default {
   name: 'App',
   data(){
     return {
-      msg:''
+      msg:'',
+      info:{
+        name:'黄雪松',
+        id:'666'
+      }
     }
   },
   sockets:{
     connect: function(){
-      // 与socket连接成功的回调
-      console.log('连接成功')
+      // 连接成功回调
+      // alert('连接成功')
     },
     customEmit: function(val){
-      console.log(val)
+      console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
     }
   },
   methods: {
-    clickButton: function(val){
-      // this.$socket.emit('emit_method', this.msg);
-      this.$socket.send(this.msg)
+    SendToALll: function(val){
+      this.$socket.send(this.msg,this.info)
+    },
+    SendToOne:function(val){
+      this.$socket.emit('sayto',this.info,this.msg)
+
+
+      
     }
-  }
+  },
+
 }
 </script>
 
-<style>
+<style scoped>
   input{
     margin-bottom: 20px;
   }
@@ -43,5 +54,6 @@ export default {
     cursor: pointer;
     text-align: center;
     line-height: 50px;
+    margin-bottom: 10px;
   }
 </style>
